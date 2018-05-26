@@ -24,7 +24,7 @@ public class Main {
                 while(sc.nextLine() != "stop" && toppings.size() < 4) {
                     toppings.add(sc.nextLine().toLowerCase());
                 }
-                Hamburger hb = new Hamburger(roll, toppings);
+                //Hamburger hb = new Hamburger(roll, toppings);
 
                 break;
             case "HEALTHY":
@@ -33,7 +33,7 @@ public class Main {
                 while(sc.nextLine() != "stop" && toppings.size() < 6) {
                     toppings.add(sc.nextLine().toLowerCase());
                 }
-                hb = new HealthBurger("rye", toppings);
+                //hb = new HealthBurger("rye", toppings);
                 break;
             case "DELUXE":
                 toppings.add("chips");
@@ -41,7 +41,7 @@ public class Main {
                 System.out.println("What type of roll do you want?\n" +
                         "(white, wheat, rye)");
                 roll = sc.nextLine().toLowerCase();
-                hb = new DeluxeBurger(roll, toppings);
+                //hb = new DeluxeBurger(roll, toppings);
                 break;
         }
 

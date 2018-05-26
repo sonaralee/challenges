@@ -13,13 +13,10 @@ package com.interfaces;
 // There is a whole Java I/O section later in the course where you will get to use files, etc.
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-
-    }
-
     public static ArrayList<String> readValues() {
         ArrayList<String> values = new ArrayList<String>();
 
@@ -47,5 +44,27 @@ public class Main {
             }
         }
         return values;
+    }
+
+    public static void stats(List<String> list) {
+        System.out.println("Player stats:");
+        for(String item : list) {
+            System.out.println(item);
+        }
+    }
+
+    public static void main(String[] args) {
+        List<String> theList = readValues();
+        ISaveable p;
+        p = new Player("Emma");
+
+        p.save();
+        stats(((Player) p).getStats());
+
+        p.populate(theList);
+        p.save();
+        stats(theList);
+
+
     }
 }

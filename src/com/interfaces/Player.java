@@ -9,24 +9,34 @@ import java.util.List;
 // the program to be tested easier.
 
 public class Player implements ISaveable {
-    private List<String> theList;
+    private List<String> stats;
     private Integer hp, level;
     private String name;
 
     public Player(String name) {
+        this.stats = new ArrayList<>();
         this.level = 1;
         this.hp = 50;
         this.name = name;
     }
 
-    @Override
-    public List<String> save() {
-        //theList = new ArrayList()
-        return theList;
+    public List<String> getStats() {
+        return this.stats;
     }
 
     @Override
-    public void populate(List<String> theList) {
+    public List<String> save() {
+        stats.clear();
+        stats.add(this.name);
+        stats.add(this.level.toString());
+        stats.add(this.hp.toString());
+        return stats;
+    }
 
+    @Override
+    public void populate(List<String> list) {
+        this.name = list.get(0);
+        this.level = Integer.parseInt(list.get(1));
+        this.hp = Integer.parseInt(list.get(2));
     }
 }
