@@ -1,4 +1,4 @@
-package com.answers;
+package com.innerclass;
 
 import java.util.*;
 
