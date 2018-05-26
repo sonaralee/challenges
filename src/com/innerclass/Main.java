@@ -47,7 +47,7 @@ public class Main {
         album.addSong("Night of the long knives", 5.12);
         albums.add(album);
 
-        LinkedList<Song> playList = new LinkedList<Song>();
+        LinkedList<Song> playList = new LinkedList<>();
         albums.get(0).addToPlayList("You can't do it right", playList);
         albums.get(0).addToPlayList("Holy man", playList);
         albums.get(0).addToPlayList("Speed king", playList);  // Does not exist
@@ -178,12 +178,7 @@ public class Main {
 
 
 
-    // Modify the playlist challenge so that the Album class uses an inner class.
-    // Instead of using an ArrayList to hold its tracks, it will use an inner class called SongList
-    // The inner SongList class will use an ArrayList and will provide a method to add a song.
-    // It will also provide findSong() methods which will be used by the containing Album class
-    // to add songs to the playlist.
-    // Neither the Song class or the Main class should be changed.
+
 
 
 

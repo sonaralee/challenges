@@ -1,204 +1,65 @@
 package com.answers;
 
-import java.util.*;
-
 public class Main {
 
-    private static ArrayList<Album> albums = new ArrayList<Album>();
-
     public static void main(String[] args) {
-	    // Create a program that implements a playlist for songs
-        // Create a Song class having Title and Duration for a song.
-        // The program will have an Album class containing a list of songs.
-        // The albums will be stored in an ArrayList
-        // Songs from different albums can be added to the playlist and will appear in the list in the order
-        // they are added.
-        // Once the songs have been added to the playlist, create a menu of options to:-
-        // Quit,Skip forward to the next song, skip backwards to a previous song.  Replay the current song.
-        // List the songs in the playlist
-        // A song must exist in an album before it can be added to the playlist (so you can only play songs that
-        // you own).
-        // Hint:  To replay a song, consider what happened when we went back and forth from a city before we
-        // started tracking the direction we were going.
-        // As an optional extra, provide an option to remove the current song from the playlist
-        // (hint: listiterator.remove()
+        // For this challenge, create an abstract class to define items that can be stored in a list.
+        // The class should contain 2 references to items which will represent the next and previous
+        // items (in the case of a linked list).
+        // I.e., if you call your abstract class ListItem, then it would have 2 member variables of
+        // type ListItem that will hold references to the next/right and previous/left ListItems.
+        //
+        // The abstract class will also need to hold a value - try to be as flexible as possible
+        // when defining the type of this value.
+        //
+        // The class will also need methods to move to the next item and back to the previous item,
+        // and methods to set the next and previous items.
+        //
+        // You should also specify a compareTo() method that takes a parameter of the same type as the
+        // class and returns 0 if the values are equal, greater than zero if the value sorts greater than
+        // the parameter and less than zero if it sorts less than the parameter.
+        //
+        // Create a concrete class from your abstract list item class and use this in a LinkedList
+        // class to implement a linked list that will add items in order (so that they are sorted
+        // alphabetically). Duplicate values are not added.
+        //
+        // Note that you are creating your own LinkedList class here, not using the built-in Java one..
+        //
+        // The rules for adding an item to the linked list are:
+        //  If the head of the list is null, make the head refer to the item to be added.
+        //  If the item to be added is less than the current item in the list, add the item before the
+        //      current item (i.e., make the previous item's "next" refer to the new item, and the new item's
+        //      "next" refer to the current item).
+        //  If the item to be added is greater than the current item, move onto the next item and compare
+        //      again (if there is no next item then that is where the new item belongs).
+        //
+        // Care will be needed when inserting before the first item in the list (as it will not have a previous
+        // item).
+        //
+        // You will also need a method to remove an item from the list.
+        //
+        // Hint: If you are creating classes with names such as List, LinkedList, Node etc, make sure that
+        // you create your classes before referring to them. In previous videos we have often referred to
+        // classes that we create later, but if you use names that IntelliJ recognises as Java classes (such
+        // as LinkedList) then it will create imports for them and possibly cause you problems later.
+        //
+        // Optional: create a class to use your concrete class to implement a Binary Search Tree:
+        // When adding items to a Binary Search Tree, if the item to be added is less than the current item
+        // then move to the left, if it is greater than the current item then move to the right.
+        //
+        // The new item is added when an attempt to move in the required direction would involve following a
+        // null reference.
+        // Once again, duplicates are not allowed.
+        //
+        // Hint: to avoid typing loads of "addItem" lines, split a string into an array and create your list in
+        // a loop as in the example below.
+        //
+        // Create a string data array to avoid typing loads of addItem instructions:
+        String stringData = "Darwin Brisbane Perth Melbourne Canberra Adelaide Sydney Canberra";
 
-        Album album = new Album("Stormbringer", "Deep Purple");
-        album.addSong("Stormbringer", 4.6);
-        album.addSong("Love don't mean a thing", 4.22);
-        album.addSong("Holy man", 4.3);
-        album.addSong("Hold on", 5.6);
-        album.addSong("Lady double dealer", 3.21);
-        album.addSong("You can't do it right", 6.23);
-        album.addSong("High ball shooter", 4.27);
-        album.addSong("The gypsy", 4.2);
-        album.addSong("Soldier of fortune", 3.13);
-        albums.add(album);
-
-        album = new Album("For those about to rock", "AC/DC");
-        album.addSong("For those about to rock", 5.44);
-        album.addSong("I put the finger on you", 3.25);
-        album.addSong("Lets go", 3.45);
-        album.addSong("Inject the venom", 3.33);
-        album.addSong("Snowballed", 4.51);
-        album.addSong("Evil walks", 3.45);
-        album.addSong("C.O.D.", 5.25);
-        album.addSong("Breaking the rules", 5.32);
-        album.addSong("Night of the long knives", 5.12);
-        albums.add(album);
-
-        LinkedList<Song> playList = new LinkedList<Song>();
-        albums.get(0).addToPlayList("You can't do it right", playList);
-        albums.get(0).addToPlayList("Holy man", playList);
-        albums.get(0).addToPlayList("Speed king", playList);  // Does not exist
-        albums.get(0).addToPlayList(9, playList);
-        albums.get(1).addToPlayList(8, playList);
-        albums.get(1).addToPlayList(3, playList);
-        albums.get(1).addToPlayList(2, playList);
-        albums.get(1).addToPlayList(24, playList);  // There is no track 24
-
-        play(playList);
-
-
-
-
-    }
-
-    private static void play(LinkedList<Song> playList) {
-        Scanner scanner = new Scanner(System.in);
-        boolean quit = false;
-        boolean forward = true;
-        ListIterator<Song> listIterator = playList.listIterator();
-        if(playList.size() == 0) {
-            System.out.println("No songs in playlist");
-            return;
-        } else {
-            System.out.println("Now playing " + listIterator.next().toString());
-            printMenu();
-        }
-
-        while(!quit) {
-            int action = scanner.nextInt();
-            scanner.nextLine();
-
-            switch(action) {
-                case 0:
-                    System.out.println("Playlist complete.");
-                    quit = true;
-                    break;
-                case 1:
-                    if(!forward) {
-                        if(listIterator.hasNext()) {
-                            listIterator.next();
-                        }
-                        forward = true;
-                    }
-                    if(listIterator.hasNext()) {
-                        System.out.println("Now playing " + listIterator.next().toString());
-                    } else {
-                        System.out.println("We have reached the end of the playlist");
-                        forward = false;
-                    }
-                    break;
-
-                case 2:
-                    if(forward) {
-                        if(listIterator.hasPrevious()) {
-                            listIterator.previous();
-                        }
-                        forward = false;
-                    }
-                    if(listIterator.hasPrevious()) {
-                        System.out.println("Now playing " + listIterator.previous().toString());
-                    } else {
-                        System.out.println("We are at the start of the playlist");
-                        forward = true;
-                    }
-                    break;
-                case 3:
-                    if(forward) {
-                        if(listIterator.hasPrevious()) {
-                            System.out.println("Now replaying " + listIterator.previous().toString());
-                            forward = false;
-                        } else {
-                            System.out.println("We are at the start of the list");
-                        }
-                    } else {
-                        if(listIterator.hasNext()) {
-                            System.out.println("Now replaying " + listIterator.next().toString());
-                            forward = true;
-                        } else {
-                            System.out.println("We have reached the end of the list");
-                        }
-                    }
-                    break;
-                case 4:
-                    printList(playList);
-                    break;
-                case 5:
-                    printMenu();
-                    break;
-
-                case 6:
-                    if(playList.size() >0) {
-                        listIterator.remove();
-                        if(listIterator.hasNext()) {
-                            System.out.println("Now playing " + listIterator.next());
-                        } else if(listIterator.hasPrevious()) {
-                            System.out.println("Now playing " + listIterator.previous());
-                        }
-                    }
-                    break;
-
-            }
+        String[] data = stringData.split(" ");
+        for (String s : data) {
+            // create new item with value set to the string s
         }
     }
-
-    private static void printMenu() {
-        System.out.println("Available actions:\npress");
-        System.out.println("0 - to quit\n" +
-                "1 - to play next song\n" +
-                "2 - to play previous song\n" +
-                "3 - to replay the current song\n" +
-                "4 - list songs in the playlist\n" +
-                "5 - print available actions.\n" +
-                "6 - delete current song from playlist");
-
-    }
-
-
-    private static void printList(LinkedList<Song> playList) {
-        Iterator<Song> iterator = playList.iterator();
-        System.out.println("================================");
-        while(iterator.hasNext()) {
-            System.out.println(iterator.next());
-        }
-        System.out.println("================================");
-    }
-
-
-
-    // Modify the playlist challenge so that the Album class uses an inner class.
-    // Instead of using an ArrayList to hold its tracks, it will use an inner class called SongList
-    // The inner SongList class will use an ArrayList and will provide a method to add a song.
-    // It will also provide findSong() methods which will be used by the containing Album class
-    // to add songs to the playlist.
-    // Neither the Song class or the Main class should be changed.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
