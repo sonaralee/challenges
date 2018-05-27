@@ -1,6 +1,5 @@
-package com.generics;
+package com.generics2;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 //
@@ -10,17 +9,17 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        League<Team> nl = new League<>("National League");
+        League<Team<BaseballPlayer>> nl = new League<>("National League");
         //League<Team> al = new League<>("American League");
         //ArrayList theTeams = new ArrayList<Team>();
-        Team cubs = new BaseballTeam("Cubs");
-        Team braves = new BaseballTeam("Braves");
-        Team dodgers = new BaseballTeam("Dodgers");
-        Team cardinals = new BaseballTeam("Cardinals");
+        Team<BaseballPlayer> cubs = new Team<>("Cubs");
+        Team<BaseballPlayer> braves = new Team<>("Braves");
+        Team<BaseballPlayer> dodgers = new Team<>("Dodgers");
+        Team<BaseballPlayer> cardinals = new Team<>("Cardinals");
 
-        cubs.addPlayer(new Player("Anthony Rizzo", "1B"));
-        cubs.addPlayer(new Player("Kris Bryant", "3B"));
-        cubs.addPlayer(new Player("Kyle Hendricks", "P"));
+        cubs.addPlayer(new BaseballPlayer("Anthony Rizzo", "1B"));
+        cubs.addPlayer(new BaseballPlayer("Kris Bryant", "3B"));
+        cubs.addPlayer(new BaseballPlayer("Kyle Hendricks", "P"));
         //cubs.addPlayer(new Player());
         cubs.printRoster();
 

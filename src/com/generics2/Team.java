@@ -1,24 +1,28 @@
-package com.generics;
+package com.generics2;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Team implements Comparable<Team> {
-    private List<Player> players;
+public class Team<T extends Player> implements Comparable<Team<T>> {
+    private List<T> players;
     private int numPlayers;
-    private int rank, wins, losses;
+    private Double wins, losses, gamesPlayed;
+    private Double rank;
     private String name;
 
     public Team(String n) {
         this.name = n;
-        this.wins = 0;
-        this.losses = 0;
-        this.rank = 0;
+        this.wins = 0.0;
+        this.losses = 0.0;
+        this.rank = 0.0;
+        this.gamesPlayed = 0.0;
         this.players = new ArrayList<>();
     }
 
-    public void playGame(Team t, int ourScore, int theirScore) {
-        String message;
+    public void playGame(Team<T> t, int ourScore, int theirScore) {
+        //String message;
+        gamesPlayed++;
 
         if(ourScore > theirScore) {
             wins++;
@@ -40,11 +44,18 @@ public abstract class Team implements Comparable<Team> {
         return this.name;
     }
 
-    public int getRank() {
-        return wins*2;
+    public Double getRank() {
+        //DecimalFormat form = new DecimalFormat(".###");
+        //return Double.parseDouble(form.format(wins/gamesPlayed));
+        return wins/gamesPlayed;
     }
 
-    public void addPlayer(Player lp) {
+    public Double getGamesPlayed(){
+        return gamesPlayed;
+    }
+
+
+    public void addPlayer(T lp) {
         this.players.add(lp);
     }
 
@@ -55,6 +66,13 @@ public abstract class Team implements Comparable<Team> {
         }
     }
 
-    public abstract int compareTo(Team t);
+    @Override
+    public int compareTo(Team<T> t) {
+        if(this.getRank() > t.getRank()) {
+            return -1;
+        } else if(this.getRank() == t.getRank()) {
+            return 1;
+        } else return 0;
+    }
 
 }

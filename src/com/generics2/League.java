@@ -1,4 +1,4 @@
-package com.generics;
+package com.generics2;
 
 // Create a generic class to implement a league table for a sport.
 // The class should allow teams to be added to the list, and store
@@ -46,7 +46,7 @@ public class League<T extends Team> {
         return this.league;
     }
 
-    public Team getTeamAt(int i) {
+    public T getTeamAt(int i) {
         return this.league.get(i);
     }
 
@@ -59,9 +59,13 @@ public class League<T extends Team> {
     public void printInOrder() {
         // order teams by ranking
         Collections.sort(league);
+        String winPercent;
         System.out.println("Printing sorted list of teams in: " + this.name);
         for(T team : league) {
-            System.out.println(team.getName() + " (" + team.getRank() + ")");
+            winPercent = team.getRank().toString().replaceFirst("^0\\.", ".");
+            System.out.print(team.getName() + " (");
+            System.out.printf("%.4s", winPercent);
+            System.out.println(")");
         }
     }
 }
