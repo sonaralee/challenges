@@ -1,5 +1,7 @@
 package com.abstractclass;
 
+import java.util.ArrayList;
+
 public class Main {
     // For this challenge, create an abstract class to define items that can be stored in a list.
     //
