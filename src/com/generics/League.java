@@ -11,48 +11,56 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class League<T extends Team> {
-    private ArrayList<T> teams = new ArrayList<>();
+    private ArrayList<T> league = new ArrayList<>();
     private String name;
 
     public League(String n) {
         this.name = n;
     }
 
-    public boolean addTeam(T team) {
-        if(teams.contains(team)) {
+    public void addTeam(T team) {
+        if(league.contains(team)) {
             System.out.println("Team " + team.getName() + " already in league.");
-            return false;
         }
         else {
-            this.teams.add(team);
+            this.league.add(team);
             System.out.println("Team " + team.getName() + " added to league.");
-            return true;
+        }
+    }
+    public void addTeam(ArrayList<T> ts) {
+        for(T team : ts) {
+            if (league.contains(team)) {
+                System.out.println("Team " + team.getName() + " already in league.");
+            } else {
+                this.league.add(team);
+                System.out.println("Team " + team.getName() + " added to league.");
+            }
         }
     }
 
     public int size() {
-        return this.teams.size();
+        return this.league.size();
     }
 
     public ArrayList<T> getTeams() {
-        return this.teams;
+        return this.league;
     }
 
     public Team getTeamAt(int i) {
-        return this.teams.get(i);
+        return this.league.get(i);
     }
 
     public void print() {
-        for(T team : teams) {
+        for(T team : league) {
             System.out.println(team.getName());
         }
     }
 
     public void printInOrder() {
         // order teams by ranking
-        Collections.sort(teams);
+        Collections.sort(league);
         System.out.println("Printing sorted list of teams in: " + this.name);
-        for(T team : teams) {
+        for(T team : league) {
             System.out.println(team.getName() + " (" + team.getRank() + ")");
         }
     }

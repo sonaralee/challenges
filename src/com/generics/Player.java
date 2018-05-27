@@ -12,4 +12,12 @@ public class Player {
         this.name = n;
         this.position = p;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPosition() {
+        return position;
+    }
 }

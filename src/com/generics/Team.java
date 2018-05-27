@@ -1,5 +1,6 @@
 package com.generics;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Team implements Comparable<Team> {
@@ -13,6 +14,7 @@ public abstract class Team implements Comparable<Team> {
         this.wins = 0;
         this.losses = 0;
         this.rank = 0;
+        this.players = new ArrayList<>();
     }
 
     public void playGame(Team t, int ourScore, int theirScore) {
@@ -20,16 +22,16 @@ public abstract class Team implements Comparable<Team> {
 
         if(ourScore > theirScore) {
             wins++;
-            message = " beat ";
+            //message = " beat ";
         } else if (ourScore == theirScore) {
-            message = " tied with ";
+            //message = " tied with ";
         } else {
             losses++;
-            message = " lost to ";
+            //message = " lost to ";
         }
 
         if(t != null) {
-            System.out.println(this.getName() + message + t.getName());
+            //System.out.println(this.getName() + message + t.getName());
             t.playGame(null, theirScore, ourScore);
         }
     }
@@ -42,8 +44,15 @@ public abstract class Team implements Comparable<Team> {
         return wins*2;
     }
 
-    public void addPlayers(List<Player> lp) {
-        this.players = lp;
+    public void addPlayer(Player lp) {
+        this.players.add(lp);
+    }
+
+    public void printRoster() {
+        System.out.println("Roster for the " + this.getName() + ":");
+        for(Player p : players) {
+            System.out.println(p.getPosition() + " " + p.getName());
+        }
     }
 
     public abstract int compareTo(Team t);
