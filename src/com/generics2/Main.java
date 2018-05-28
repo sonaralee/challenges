@@ -52,12 +52,12 @@ public class Main {
     private static void playSeason(League l) {
 
         Random rand = new Random();
-        final int numGames = 162;
+        final int SEASON_GAMES = 162;
         int i = 0;
         int num, num2, score, score2;
 
         System.out.println("Playing games...");
-        while(i < numGames) {
+        while(i < SEASON_GAMES) {
             num = rand.nextInt(l.size());
             num2 = rand.nextInt(l.size());
             score = rand.nextInt();
