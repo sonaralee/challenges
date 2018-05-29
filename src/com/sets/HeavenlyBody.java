@@ -2,8 +2,6 @@ package com.sets;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Collection;
-import java.util.Collections;
 
 // Modify the previous HeavenlyBody example so that the HeavenlyBody
 // class also has a "bodyType" field. This field will store the
@@ -19,17 +17,13 @@ public class HeavenlyBody {
     private final String name;
     private final String bodyType;
     private final double orbitalPeriod;
-    private final Set<? extends HeavenlyBody> satellites;
+    private final Set<HeavenlyBody> satellites;
 
     public HeavenlyBody(String name, String bt, double orbitalPeriod) {
         this.name = name;
         this.bodyType = bt;
         this.orbitalPeriod = orbitalPeriod;
-        if(this instanceof Planet) {
-            this.satellites = new HashSet<>();
-        } else {
-            this.satellites = new HashSet<>();
-        }
+        this.satellites = new HashSet<>();
     }
 
     public String getName() {
@@ -40,12 +34,12 @@ public class HeavenlyBody {
         return orbitalPeriod;
     }
 
-    public <T> boolean addMoon(Moon moon) {
-        return this.satellites.add(moon);
+    public boolean addSatellite(HeavenlyBody s) {
+        return this.satellites.add(s);
     }
 
-    public <T> Set<T> getSatellites() {
-        return new HashSet<T>(this.satellites);
+    public Set<? extends HeavenlyBody> getSatellites() {
+        return new HashSet<>(this.satellites);
     }
 
 

@@ -41,7 +41,7 @@ public class Main {
     private static Set<Planet> planets = new HashSet<>();
 
     public static void main(String[] args) {
-        HeavenlyBody temp = new Planet("Mercury", "planet", 88);
+        Planet temp = new Planet("Mercury", "planet", 88);
         solarSystem.put(temp.getName(), temp);
         planets.add(temp);
 
@@ -53,9 +53,9 @@ public class Main {
         solarSystem.put(temp.getName(), temp);
         planets.add(temp);
 
-        HeavenlyBody tempMoon = new Moon("Moon", "moon", 27);
+        Moon tempMoon = new Moon("Moon", "moon", 27);
         solarSystem.put(tempMoon.getName(), tempMoon);
-        temp.addMoon(tempMoon);
+        temp.addSatellite(tempMoon);
 
         temp = new Planet("Mars", "planet", 687);
         solarSystem.put(temp.getName(), temp);
@@ -63,11 +63,11 @@ public class Main {
 
         tempMoon = new Moon("Deimos", "moon", 1.3);
         solarSystem.put(tempMoon.getName(), tempMoon);
-        temp.addMoon(tempMoon); // temp is still Mars
+        temp.addSatellite(tempMoon); // temp is still Mars
 
         tempMoon = new Moon("Phobos", "moon", 0.3);
         solarSystem.put(tempMoon.getName(), tempMoon);
-        temp.addMoon(tempMoon); // temp is still Mars
+        temp.addSatellite(tempMoon); // temp is still Mars
 
         temp = new Planet("Jupiter", "moon", 4332);
         solarSystem.put(temp.getName(), temp);
@@ -75,19 +75,19 @@ public class Main {
 
         tempMoon = new Moon("Io", "moon", 1.8);
         solarSystem.put(tempMoon.getName(), tempMoon);
-        temp.addMoon(tempMoon); // temp is still Jupiter
+        temp.addSatellite(tempMoon); // temp is still Jupiter
 
         tempMoon = new Moon("Europa", "moon", 3.5);
         solarSystem.put(tempMoon.getName(), tempMoon);
-        temp.addMoon(tempMoon); // temp is still Jupiter
+        temp.addSatellite(tempMoon); // temp is still Jupiter
 
         tempMoon = new Moon("Ganymede", "moon", 7.1);
         solarSystem.put(tempMoon.getName(), tempMoon);
-        temp.addMoon(tempMoon); // temp is still Jupiter
+        temp.addSatellite(tempMoon); // temp is still Jupiter
 
         tempMoon = new Moon("Callisto", "moon", 16.7);
         solarSystem.put(tempMoon.getName(), tempMoon);
-        temp.addMoon(tempMoon); // temp is still Jupiter
+        temp.addSatellite(tempMoon); // temp is still Jupiter
 
         temp = new Planet("Saturn", "moon", 10759);
         solarSystem.put(temp.getName(), temp);
@@ -116,7 +116,7 @@ public class Main {
             System.out.println("\t" + m.getName());
         }
 
-        Set<Moon> moons = new HashSet<>();
+        HashSet<HeavenlyBody> moons = new HashSet<>();
         for(Planet planet : planets) {
             moons.addAll(planet.getSatellites());
         }
@@ -126,10 +126,10 @@ public class Main {
             System.out.println("\t" + moon.getName());
         }
 
-        HeavenlyBody pluto = new Planet("Pluto", "planet", 842);
+        Planet pluto = new Planet("Pluto", "planet", 842);
         planets.add(pluto);
 
-        for(HeavenlyBody planet : planets) {
+        for(Planet planet : planets) {
             System.out.println(planet.getName() + ": " + planet.getOrbitalPeriod());
         }
 

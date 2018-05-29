@@ -18,6 +18,6 @@ public class Circle extends Shape {
     @Override
     public void describe() {
         super.describe();
-        System.out.println(name + " with a radius of " + radius + " and and area of " + area);
+        System.out.println(name + " with a radius of " + radius + " and an area of " + area);
     }
 }

@@ -18,6 +18,6 @@ public class Square extends Shape {
     @Override
     public void describe() {
         super.describe();
-        System.out.println(name + " with a side length of " + side + " and and area of " + area);
+        System.out.println(name + " with a side length of " + side + " and an area of " + area);
     }
 }
