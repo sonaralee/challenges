@@ -1,17 +1,23 @@
 package com.sets;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Planet extends HeavenlyBody{
+class Planet extends HeavenlyBody{
     private final Set<Moon> moons;
 
-    Planet(String name, String bt, double orbitalPeriod) {
+    Planet(String name, BodyTypes bt, double orbitalPeriod) {
         super(name, bt, orbitalPeriod);
         this.moons = new HashSet<>();
     }
 
-    public Set<? extends HeavenlyBody> getSatellites() {
-        return new HashSet<>(this.moons);
+    @Override
+    public <T> void addSatellite(T s) {
+        this.moons.add((Moon)s);
+    }
+
+    public Collection<? extends HeavenlyBody> getSatellites() {
+        return new HashSet<>(moons);
     }
 }

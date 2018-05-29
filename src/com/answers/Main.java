@@ -1,79 +1,124 @@
 package com.answers;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 public class Main {
+    private static Map<HeavenlyBody.Key, HeavenlyBody> solarSystem = new HashMap<>();
+    private static Set<HeavenlyBody> planets = new HashSet<>();
 
     public static void main(String[] args) {
-	    // ArrayList<Team> teams;
-        // Collections.sort(teams);
-        // Create a generic class to implement a league table for a sport.
-        // The class should allow teams to be added to the list, and store
-        // a list of teams that belong to the league.
-        //
-        // Your class should have a method to print out the teams in order,
-        // with the team at the top of the league printed first.
-        //
-        // Only teams of the same type should be added to any particular
-        // instance of the league class - the program should fail to compile
-        // if an attempt is made to add an incompatible team.
+        HeavenlyBody temp = new Planet("Mercury", 88);
+        solarSystem.put(temp.getKey(), temp);
+        planets.add(temp);
 
+        temp = new Planet("Venus", 225);
+        solarSystem.put(temp.getKey(), temp);
+        planets.add(temp);
 
-        League<Team<FootballPlayer>> footballLeague = new League<>("AFL");
-        Team<FootballPlayer> adelaideCrows = new Team<>("Adelaide Crows");
-        Team<FootballPlayer> melbourne = new Team<>("Melbourne");
-        Team<FootballPlayer> hawthorn= new Team<>("Hawthorn");
-        Team<FootballPlayer> fremantle= new Team<>("Fremantle");
-        Team<BaseballPlayer> baseballTeam = new Team<>("Chicago Cubs");
+        temp = new Planet("Earth", 365);
+        solarSystem.put(temp.getKey(), temp);
+        planets.add(temp);
 
-        hawthorn.matchResult(fremantle, 1, 0);
-        hawthorn.matchResult(adelaideCrows, 3, 8);
+        HeavenlyBody tempMoon = new Moon("Moon", 27);
+        solarSystem.put(tempMoon.getKey(), tempMoon);
+        temp.addSatellite(tempMoon);
 
-        adelaideCrows.matchResult(fremantle, 2, 1);
+        temp = new Planet("Mars", 687);
+        solarSystem.put(temp.getKey(), temp);
+        planets.add(temp);
 
-        footballLeague.add(adelaideCrows);
-        footballLeague.add(melbourne);
-        footballLeague.add(hawthorn);
-        footballLeague.add(fremantle);
+        tempMoon = new Moon("Deimos", 1.3);
+        solarSystem.put(tempMoon.getKey(), tempMoon);
+        temp.addSatellite(tempMoon); // temp is still Mars
 
-//        footballLeague.add(baseballTeam);
-        footballLeague.showLeagueTable();
+        tempMoon = new Moon("Phobos", 0.3);
+        solarSystem.put(tempMoon.getKey(), tempMoon);
+        temp.addSatellite(tempMoon); // temp is still Mars
 
-        BaseballPlayer pat = new BaseballPlayer("Pat");
-        SoccerPlayer beckham = new SoccerPlayer("Beckham");
-        Team rawTeam = new Team("Raw Team");
-        rawTeam.addPlayer(beckham); // unchecked warning
-        rawTeam.addPlayer(pat);     // unchecked warning
+        temp = new Planet("Jupiter", 4332);
+        solarSystem.put(temp.getKey(), temp);
+        planets.add(temp);
 
-        footballLeague.add(rawTeam);     // unchecked warning
+        tempMoon = new Moon("Io", 1.8);
+        solarSystem.put(tempMoon.getKey(), tempMoon);
+        temp.addSatellite(tempMoon); // temp is still Jupiter
 
-        League<Team> rawLeague = new League<>("Raw");
-        rawLeague.add(adelaideCrows);     // no warning
-        rawLeague.add(baseballTeam);    // no warning
-        rawLeague.add(rawTeam);         // no warning
+        tempMoon = new Moon("Europa", 3.5);
+        solarSystem.put(tempMoon.getKey(), tempMoon);
+        temp.addSatellite(tempMoon); // temp is still Jupiter
 
-        League reallyRaw = new League("Really raw");
-        reallyRaw.add(adelaideCrows);     // unchecked warning
-        reallyRaw.add(baseballTeam);    // unchecked warning
-        reallyRaw.add(rawTeam);         // unchecked warning
+        tempMoon = new Moon("Ganymede", 7.1);
+        solarSystem.put(tempMoon.getKey(), tempMoon);
+        temp.addSatellite(tempMoon); // temp is still Jupiter
 
+        tempMoon = new Moon("Callisto", 16.7);
+        solarSystem.put(tempMoon.getKey(), tempMoon);
+        temp.addSatellite(tempMoon); // temp is still Jupiter
 
+        temp = new Planet("Saturn", 10759);
+        solarSystem.put(temp.getKey(), temp);
+        planets.add(temp);
 
+        temp = new Planet("Uranus", 30660);
+        solarSystem.put(temp.getKey(), temp);
+        planets.add(temp);
 
+        temp = new Planet("Neptune", 165);
+        solarSystem.put(temp.getKey(), temp);
+        planets.add(temp);
 
+        temp = new Planet("Pluto", 248);
+        solarSystem.put(temp.getKey(), temp);
+        planets.add(temp);
 
+        System.out.println("Planets");
+        for(HeavenlyBody planet : planets) {
+            System.out.println("\t" + planet.getKey());
+        }
 
+        HeavenlyBody body = solarSystem.get(HeavenlyBody.makeKey("Mars", HeavenlyBody.BodyTypes.PLANET));
+        System.out.println("Moons of " + body.getKey());
+        for(HeavenlyBody jupiterMoon: body.getSatellites()) {
+            System.out.println("\t" + jupiterMoon.getKey());
+        }
 
+        Set<HeavenlyBody> moons = new HashSet<>();
+        for(HeavenlyBody planet : planets) {
+            moons.addAll(planet.getSatellites());
+        }
 
+        System.out.println("All Moons");
+        for(HeavenlyBody moon : moons) {
+            System.out.println("\t" + moon.getKey());
+        }
 
+        HeavenlyBody pluto = new DwarfPlanet("Pluto", 842);
+        planets.add(pluto);
 
+        for(HeavenlyBody planet : planets) {
+            System.out.println(planet);
+//            System.out.println(planet.getKey() + ": " + planet.getOrbitalPeriod());
+        }
 
+        HeavenlyBody earth1 = new Planet("Earth", 365);
+        HeavenlyBody earth2 = new Planet("Earth", 365);
+        System.out.println(earth1.equals(earth2));
+        System.out.println(earth2.equals(earth1));
+        System.out.println(earth1.equals(pluto));
+        System.out.println(pluto.equals(earth1));
 
+        solarSystem.put(pluto.getKey(), pluto);
+        System.out.println(solarSystem.get(HeavenlyBody.makeKey("Pluto", HeavenlyBody.BodyTypes.PLANET)));
+        System.out.println(solarSystem.get(HeavenlyBody.makeKey("Pluto", HeavenlyBody.BodyTypes.DWARF_PLANET)));
 
-
-
-
-
-
-
+        System.out.println();
+        System.out.println("The solar system contains:");
+        for(HeavenlyBody heavenlyBody : solarSystem.values()) {
+            System.out.println(heavenlyBody);
+        }
 
     }
 }
