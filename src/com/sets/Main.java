@@ -102,6 +102,14 @@ public class Main {
             solarSystem.put(temp.getKey(), temp);
             planets.add(temp);
 
+            // solar system with default sort
+            System.out.println("The solar system (no sort):");
+            for(HeavenlyBody heavenlyBody : solarSystem.values()) {
+                System.out.println(heavenlyBody.getKey().getName() + " ("
+                        + heavenlyBody.getOrbitalPeriod() + ")");
+            }
+
+
             // copy solar system to list for sorting
             List<HeavenlyBody> solarList = new ArrayList<>(solarSystem.values());
 
