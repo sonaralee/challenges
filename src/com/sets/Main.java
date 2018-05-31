@@ -1,7 +1,5 @@
 package com.sets;
 
-//import com.answers.DwarfPlanet;
-
 import java.util.*;
 /*
 Although astronomers may shudder at this, our solar systems will
@@ -104,57 +102,18 @@ public class Main {
             solarSystem.put(temp.getKey(), temp);
             planets.add(temp);
 
-            System.out.println("Planets");
-            for(HeavenlyBody planet : planets) {
-                System.out.println("\t" + planet.getKey());
-            }
-
-            HeavenlyBody body = solarSystem.get(HeavenlyBody.makeKey("Mars", HeavenlyBody.BodyTypes.PLANET));
-            System.out.println("Moons of " + body.getKey());
-            for(HeavenlyBody jupiterMoon: body.getSatellites()) {
-                System.out.println("\t" + jupiterMoon.getKey());
-            }
-
-            Set<HeavenlyBody> moons = new HashSet<>();
-            for(HeavenlyBody planet : planets) {
-                moons.addAll(planet.getSatellites());
-            }
-
-            System.out.println("All Moons");
-            for(HeavenlyBody moon : moons) {
-                System.out.println("\t" + moon.getKey());
-            }
-
-            //HeavenlyBody pluto = new DwarfPlanet("Pluto", 842);
-            //planets.add(pluto);
-
-            for(HeavenlyBody planet : planets) {
-                System.out.println(planet);
-//            System.out.println(planet.getKey() + ": " + planet.getOrbitalPeriod());
-            }
-
-            HeavenlyBody earth1 = new Planet("Earth", 365);
-            HeavenlyBody earth2 = new Planet("Earth", 365);
-            System.out.println(earth1.equals(earth2));
-            System.out.println(earth2.equals(earth1));
-            //System.out.println(earth1.equals(pluto));
-            //System.out.println(pluto.equals(earth1));
-
-            //solarSystem.put(pluto.getKey(), pluto);
-            System.out.println(solarSystem.get(HeavenlyBody.makeKey("Pluto", HeavenlyBody.BodyTypes.PLANET)));
-            //System.out.println(solarSystem.get(HeavenlyBody.makeKey("Pluto", HeavenlyBody.BodyTypes.DWARF_PLANET)));
-
+            // copy solar system to list for sorting
             List<HeavenlyBody> solarList = new ArrayList<>(solarSystem.values());
-            solarList.sort(HeavenlyBody.Comparators.NAME);
 
+            // display solar system sorted by name, then type, then orbital period
+            solarList.sort(HeavenlyBody.Comparators.NAME);
             System.out.println();
-            // figure out how to display moons
             System.out.println("The solar system (sorted by name/nested moons):");
             for(HeavenlyBody heavenlyBody : solarList) {
                 if(heavenlyBody.getKey().getType() == HeavenlyBody.BodyTypes.PLANET) {
                     System.out.println(heavenlyBody);
                     if(heavenlyBody.getSatellites().size() > 0) {
-                        System.out.println(heavenlyBody.getSatellites());
+                        System.out.println("\t" + heavenlyBody.printSatellites());
                     }
                 }
             }
@@ -163,8 +122,18 @@ public class Main {
             System.out.println();
             System.out.println("The solar system (sorted by type):");
             for(HeavenlyBody heavenlyBody : solarList) {
-                System.out.println(heavenlyBody);
+                System.out.println(heavenlyBody.getKey().getName() + " ("
+                                + heavenlyBody.getKey().getType() + ")");
             }
 
+
+            solarList.sort(HeavenlyBody.Comparators.ORB);
+            Collections.reverse(solarList); // sort descending
+            System.out.println();
+            System.out.println("The solar system (sorted by orbital period):");
+            for(HeavenlyBody heavenlyBody : solarList) {
+                System.out.println(heavenlyBody.getKey().getName() + " ("
+                        + heavenlyBody.getOrbitalPeriod() + ")");
+            }
         }
 }

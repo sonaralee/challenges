@@ -29,7 +29,7 @@ public abstract class HeavenlyBody implements Comparable<HeavenlyBody> {
         this.satellites = new HashSet<>();
     }
 
-    public Key getKey() {
+    Key getKey() {
         return theKey;
     }
 
@@ -41,17 +41,28 @@ public abstract class HeavenlyBody implements Comparable<HeavenlyBody> {
         return this.satellites;
     }
 
-//    public String printSatellites() {
+    StringBuilder printSatellites() {
+        StringBuilder sb = new StringBuilder();
+        for(HeavenlyBody hb : this.getSatellites()) {
+            //System.out.println(hb.getKey().getName());
+            sb.append(hb.getKey().getName()).append(" ");
+        }
+        return sb;
+
+        //String
+        //for(Object s : satellites) {
+        //    System.out.println(((HeavenlyBody)s).getKey().getName());
+        //}
 //        String[] list1 = new String[this.satellites.size()]();
 //        String[] list = new String[this.satellites.size()];
 //        for(int i = 0; i < this.satellites.size(); i++) {
 //            list1[i] = satellites;
 //        }
 //        return list.toString();
-//    }
+    }
 
-    public boolean addSatellite(HeavenlyBody hb) {
-        return this.satellites.add(hb);
+    public void addSatellite(HeavenlyBody hb) {
+        this.satellites.add(hb);
     }
 
     @Override
@@ -80,7 +91,7 @@ public abstract class HeavenlyBody implements Comparable<HeavenlyBody> {
         return Comparators.NAME.compare(this, hb);
     }
 
-    public static Key makeKey(String s, BodyTypes bt) {
+    static Key makeKey(String s, BodyTypes bt) {
         return new Key(s, bt);
     }
 
@@ -125,28 +136,20 @@ public abstract class HeavenlyBody implements Comparable<HeavenlyBody> {
         }
     }
 
-    public static class Comparators {
+    static class Comparators {
 
-        public static Comparator<HeavenlyBody> NAME = new Comparator<HeavenlyBody>() {
-            @Override
-            public int compare(HeavenlyBody o1, HeavenlyBody o2) {
-                return o1.theKey.name.compareTo(o2.theKey.name);
-            }
-        };
-        public static Comparator<HeavenlyBody> TYPE = new Comparator<HeavenlyBody>() {
-            @Override
-            public int compare(HeavenlyBody o1, HeavenlyBody o2) {
-                return o1.theKey.type.compareTo(o2.theKey.type);
-            }
-        };
+        static Comparator<HeavenlyBody> NAME =
+                Comparator.comparing(o -> o.theKey.name);
+
+        static Comparator<HeavenlyBody> TYPE =
+                Comparator.comparing(o -> o.theKey.type);
+
+        static Comparator<HeavenlyBody> ORB =
+                Comparator.comparing(HeavenlyBody::getOrbitalPeriod);
     }
 
     @Override
     public String toString() {
-        String tabStr = "";
-        if(this.theKey.type == BodyTypes.MOON) {
-            tabStr = "\t";
-        }
-        return tabStr + this.theKey.name + " (" + this.theKey.type + ")";
+        return this.theKey.name;
     }
 }

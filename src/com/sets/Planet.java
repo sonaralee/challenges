@@ -12,8 +12,8 @@ class Planet extends HeavenlyBody{
     }
 
     @Override
-    public boolean addSatellite(HeavenlyBody hb) {
-        return this.moons.add((Moon)hb);
+    public void addSatellite(HeavenlyBody hb) {
+        this.moons.add((Moon)hb);
     }
 
     public Set<HeavenlyBody> getSatellites() {
