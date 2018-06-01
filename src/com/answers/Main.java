@@ -1,124 +1,150 @@
 package com.answers;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class Main {
-    private static Map<HeavenlyBody.Key, HeavenlyBody> solarSystem = new HashMap<>();
-    private static Set<HeavenlyBody> planets = new HashSet<>();
+    private static StockList stockList = new StockList();
 
     public static void main(String[] args) {
-        HeavenlyBody temp = new Planet("Mercury", 88);
-        solarSystem.put(temp.getKey(), temp);
-        planets.add(temp);
+	    StockItem temp = new StockItem("bread", 0.86, 100);
+        stockList.addStock(temp);
 
-        temp = new Planet("Venus", 225);
-        solarSystem.put(temp.getKey(), temp);
-        planets.add(temp);
+        temp = new StockItem("cake", 1.10, 7);
+        stockList.addStock(temp);
 
-        temp = new Planet("Earth", 365);
-        solarSystem.put(temp.getKey(), temp);
-        planets.add(temp);
+        temp = new StockItem("car", 12.50, 2);
+        stockList.addStock(temp);
 
-        HeavenlyBody tempMoon = new Moon("Moon", 27);
-        solarSystem.put(tempMoon.getKey(), tempMoon);
-        temp.addSatellite(tempMoon);
+        temp = new StockItem("chair", 62.0, 10);
+        stockList.addStock(temp);
 
-        temp = new Planet("Mars", 687);
-        solarSystem.put(temp.getKey(), temp);
-        planets.add(temp);
+        temp = new StockItem("cup", 0.50, 200);
+        stockList.addStock(temp);
+        temp = new StockItem("cup", 0.45, 7);
+        stockList.addStock(temp);
 
-        tempMoon = new Moon("Deimos", 1.3);
-        solarSystem.put(tempMoon.getKey(), tempMoon);
-        temp.addSatellite(tempMoon); // temp is still Mars
+        temp = new StockItem("door", 72.95, 4);
+        stockList.addStock(temp);
 
-        tempMoon = new Moon("Phobos", 0.3);
-        solarSystem.put(tempMoon.getKey(), tempMoon);
-        temp.addSatellite(tempMoon); // temp is still Mars
+        temp = new StockItem("juice", 2.50, 36);
+        stockList.addStock(temp);
 
-        temp = new Planet("Jupiter", 4332);
-        solarSystem.put(temp.getKey(), temp);
-        planets.add(temp);
+        temp = new StockItem("phone", 96.99, 35);
+        stockList.addStock(temp);
 
-        tempMoon = new Moon("Io", 1.8);
-        solarSystem.put(tempMoon.getKey(), tempMoon);
-        temp.addSatellite(tempMoon); // temp is still Jupiter
+        temp = new StockItem("towel", 2.40, 80);
+        stockList.addStock(temp);
 
-        tempMoon = new Moon("Europa", 3.5);
-        solarSystem.put(tempMoon.getKey(), tempMoon);
-        temp.addSatellite(tempMoon); // temp is still Jupiter
+        temp = new StockItem("vase", 8.76, 40);
+        stockList.addStock(temp);
 
-        tempMoon = new Moon("Ganymede", 7.1);
-        solarSystem.put(tempMoon.getKey(), tempMoon);
-        temp.addSatellite(tempMoon); // temp is still Jupiter
+        System.out.println(stockList);
 
-        tempMoon = new Moon("Callisto", 16.7);
-        solarSystem.put(tempMoon.getKey(), tempMoon);
-        temp.addSatellite(tempMoon); // temp is still Jupiter
-
-        temp = new Planet("Saturn", 10759);
-        solarSystem.put(temp.getKey(), temp);
-        planets.add(temp);
-
-        temp = new Planet("Uranus", 30660);
-        solarSystem.put(temp.getKey(), temp);
-        planets.add(temp);
-
-        temp = new Planet("Neptune", 165);
-        solarSystem.put(temp.getKey(), temp);
-        planets.add(temp);
-
-        temp = new Planet("Pluto", 248);
-        solarSystem.put(temp.getKey(), temp);
-        planets.add(temp);
-
-        System.out.println("Planets");
-        for(HeavenlyBody planet : planets) {
-            System.out.println("\t" + planet.getKey());
+        for(String s: stockList.Items().keySet()) {
+            System.out.println(s);
         }
 
-        HeavenlyBody body = solarSystem.get(HeavenlyBody.makeKey("Mars", HeavenlyBody.BodyTypes.PLANET));
-        System.out.println("Moons of " + body.getKey());
-        for(HeavenlyBody jupiterMoon: body.getSatellites()) {
-            System.out.println("\t" + jupiterMoon.getKey());
+        Basket timsBasket = new Basket("Tim");
+
+        sellItem(timsBasket, "car", 1);
+        System.out.println(timsBasket);
+
+        sellItem(timsBasket, "car", 1);
+        System.out.println(timsBasket);
+
+        if(sellItem(timsBasket, "car", 1) != 1) {
+            System.out.println("There are no more cars in stock");
         }
 
-        Set<HeavenlyBody> moons = new HashSet<>();
-        for(HeavenlyBody planet : planets) {
-            moons.addAll(planet.getSatellites());
+        sellItem(timsBasket, "spanner", 5);
+//        System.out.println(timsBasket);
+
+        sellItem(timsBasket, "juice", 4);
+        sellItem(timsBasket, "cup", 12);
+        sellItem(timsBasket, "bread", 1);
+//        System.out.println(timsBasket);
+
+//        System.out.println(stockList);
+
+        Basket basket = new Basket("customer");
+        sellItem(basket, "cup", 100);
+        sellItem(basket, "juice", 5);
+        removeItem(basket, "cup", 1);
+        System.out.println(basket);
+
+        removeItem(timsBasket, "car", 1);
+        removeItem(timsBasket, "cup", 9);
+        removeItem(timsBasket, "car", 1);
+        System.out.println("cars removed: " + removeItem(timsBasket, "car", 1));  // should not remove any
+
+        System.out.println(timsBasket);
+
+        // remove all items from timsBasket
+        removeItem(timsBasket, "bread", 1);
+        removeItem(timsBasket, "cup", 3);
+        removeItem(timsBasket, "juice", 4);
+        removeItem(timsBasket, "cup", 3);
+        System.out.println(timsBasket);
+
+        System.out.println("\nDisplay stock list before and after checkout");
+        System.out.println(basket);
+        System.out.println(stockList);
+        checkOut(basket);
+        System.out.println(basket);
+        System.out.println(stockList);
+
+//        temp = new StockItem("pen", 1.12);
+//        stockList.Items().put(temp.getName(), temp);
+        StockItem car = stockList.Items().get("car");
+        if(car != null) {
+            car.adjustStock(2000);
+        }
+        if(car != null) {
+            stockList.get("car").adjustStock(-1000);
         }
 
-        System.out.println("All Moons");
-        for(HeavenlyBody moon : moons) {
-            System.out.println("\t" + moon.getKey());
-        }
+        System.out.println(stockList);
+//        for(Map.Entry<String, Double> price: stockList.PriceList().entrySet()) {
+//            System.out.println(price.getKey() + " costs " + price.getValue());
+//        }
 
-        HeavenlyBody pluto = new DwarfPlanet("Pluto", 842);
-        planets.add(pluto);
+        checkOut(timsBasket);
+        System.out.println(timsBasket);
 
-        for(HeavenlyBody planet : planets) {
-            System.out.println(planet);
-//            System.out.println(planet.getKey() + ": " + planet.getOrbitalPeriod());
-        }
-
-        HeavenlyBody earth1 = new Planet("Earth", 365);
-        HeavenlyBody earth2 = new Planet("Earth", 365);
-        System.out.println(earth1.equals(earth2));
-        System.out.println(earth2.equals(earth1));
-        System.out.println(earth1.equals(pluto));
-        System.out.println(pluto.equals(earth1));
-
-        solarSystem.put(pluto.getKey(), pluto);
-        System.out.println(solarSystem.get(HeavenlyBody.makeKey("Pluto", HeavenlyBody.BodyTypes.PLANET)));
-        System.out.println(solarSystem.get(HeavenlyBody.makeKey("Pluto", HeavenlyBody.BodyTypes.DWARF_PLANET)));
-
-        System.out.println();
-        System.out.println("The solar system contains:");
-        for(HeavenlyBody heavenlyBody : solarSystem.values()) {
-            System.out.println(heavenlyBody);
-        }
 
     }
+
+    public static int sellItem(Basket basket, String item, int quantity) {
+        // retrieve the item from stock list
+        StockItem stockItem = stockList.get(item);
+        if(stockItem == null) {
+            System.out.println("We don't sell " + item);
+            return 0;
+        }
+        if(stockList.reserveStock(item, quantity) != 0) {
+            return basket.addToBasket(stockItem, quantity);
+        }
+        return 0;
+    }
+
+    public static int removeItem(Basket basket, String item, int quantity) {
+        // retrieve the item from stock list
+        StockItem stockItem = stockList.get(item);
+        if(stockItem == null) {
+            System.out.println("We don't sell " + item);
+            return 0;
+        }
+        if(basket.removeFromBasket(stockItem, quantity) == quantity) {
+            return stockList.unreserveStock(item, quantity);
+        }
+        return 0;
+    }
+
+    public static void checkOut(Basket basket) {
+        for (Map.Entry<StockItem, Integer> item : basket.Items().entrySet()) {
+            stockList.sellStock(item.getKey().getName(), item.getValue());
+        }
+        basket.clearBasket();
+    }
+
 }

@@ -2,7 +2,7 @@ package com.testing;
 
 public class Main {
 
-    public static int mult = 5;
+    //public static int mult = 5;
 
     /* TYPE PARAMETERS EXAMPLES
         E - Element (used by collections framework)
@@ -24,7 +24,9 @@ public class Main {
 //        System.out.println(Series.factorial(1));
 //        System.out.println(Series.factorial(10));
 
-        System.out.println(mult);
+        //System.out.println(mult);
+
+
 
     }
 
