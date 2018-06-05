@@ -26,9 +26,9 @@ public class Location {
 //        exits.put(direction, location);
 //    }
 
-    //public int getLocationID() {
-      //  return locationID;
-    //}
+    public int getLocationID() {
+        return locationID;
+    }
 
     String getDescription() {
         return description;
@@ -37,4 +37,5 @@ public class Location {
     Map<String, Integer> getExits() {
         return new HashMap<>(exits);
     }
+
 }
