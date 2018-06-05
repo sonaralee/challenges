@@ -11,13 +11,13 @@ public class Location {
     private final String description;
     private final Map<String, Integer> exits;
 
-    Location(int locationID, String description, Map<String, Integer> exits) {
+    public Location(int locationID, String description, Map<String, Integer> exits) {
         this.locationID = locationID;
         this.description = description;
         if(exits != null) {
-            this.exits = new HashMap<>(exits);
+            this.exits = new HashMap<String, Integer>(exits);
         } else {
-            this.exits = new HashMap<>();
+            this.exits = new HashMap<String, Integer>();
         }
         this.exits.put("Q", 0);
     }
@@ -30,12 +30,14 @@ public class Location {
         return locationID;
     }
 
-    String getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    Map<String, Integer> getExits() {
-        return new HashMap<>(exits);
+    public Map<String, Integer> getExits() {
+        return new HashMap<String, Integer>(exits);
     }
-
+    protected void addExit(String direction, int location) {
+        exits.put(direction, location);
+    }
 }

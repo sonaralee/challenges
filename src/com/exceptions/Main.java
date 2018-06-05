@@ -8,10 +8,9 @@ public class Main {
     private static Locations locations = new Locations();
 
     public static void main(String[] args) {
-
         Scanner scanner = new Scanner(System.in);
 
-        Map<String, String> vocabulary = new HashMap<>();
+        Map<String, String> vocabulary = new HashMap<String, String>();
         vocabulary.put("QUIT", "Q");
         vocabulary.put("NORTH", "N");
         vocabulary.put("SOUTH", "S");
@@ -19,7 +18,8 @@ public class Main {
         vocabulary.put("EAST", "E");
 
 
-        int loc = 1;
+        int loc = 64;
+//        int loc = 1;
         while(true) {
             System.out.println(locations.get(loc).getDescription());
 
