@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        Map<String, String> vocabulary = new HashMap<String, String>();
+        Map<String, String> vocabulary = new HashMap<>();
         vocabulary.put("QUIT", "Q");
         vocabulary.put("NORTH", "N");
         vocabulary.put("SOUTH", "S");
@@ -19,7 +19,7 @@ public class Main {
 
 
         int loc = 64;
-//        int loc = 1;
+
         while(true) {
             System.out.println(locations.get(loc).getDescription());
 
