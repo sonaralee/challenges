@@ -1,4 +1,4 @@
-package com.adventure_random;
+package com.timbuchalka;
 
 import java.io.*;
 import java.util.*;
@@ -76,35 +76,11 @@ public class Locations implements Map<Integer, Location> {
         } catch(IOException e) {
             System.out.println("IOException in static initializer: " + e.getMessage());
         }
-
-//        try(ObjectInputStream locFile = new ObjectInputStream(new BufferedInputStream(
-//                new FileInputStream("locations2.dat")))) {
-//            boolean eof = false;
-//            while (!eof) {
-//                try {
-//                    Location loc = (Location) locFile.readObject();
-//                    System.out.println("Read location: " + loc.getLocationID()
-//                            + " : " + loc.getDescription());
-//                    System.out.println("Found " + loc.getExits().size()
-//                            + " exits");
-//                    locations.put(loc.getLocationID(), loc);
-//                } catch (EOFException e) {
-//                    eof = true;
-//                }
-//            }
-//        } catch(InvalidClassException ice) {
-//            System.out.println("Invalid class exception! " + ice.getMessage());
-//        } catch(IOException io) {
-//            System.out.println("IO exception! " + io.getMessage());
-//        } catch(ClassNotFoundException cnf) {
-//            System.out.println("Class not found exception! " + cnf.getMessage());
-//        }
     }
 
     public Location getLocation(int locationId) throws IOException {
 
         IndexRecord record = index.get(locationId);
-        //System.out.println("The record: " + record + " " + ra.toString());
         ra.seek(record.getStartByte());
         int id = ra.readInt();
         String description = ra.readUTF();
