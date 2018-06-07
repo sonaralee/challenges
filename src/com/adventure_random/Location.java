@@ -8,7 +8,7 @@ class Location implements Serializable {
     private final int locationID;
     private final String description;
     private final Map<String, Integer> exits;
-    private long serialVersionUID = 1L;
+    private long serialVersionUID = 2L;
 
     Location(int locationID, String description,
                             Map<String, Integer> exits) {

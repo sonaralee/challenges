@@ -38,7 +38,7 @@ public class Locations implements Map<Integer, Location> {
     static {
         // read the locations from file
         try(ObjectInputStream locFile = new ObjectInputStream(new BufferedInputStream(
-                new FileInputStream("locations.dat")))) {
+                new FileInputStream("locations2.dat")))) {
             boolean eof = false;
             while (!eof) {
                 try {
