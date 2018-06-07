@@ -1,4 +1,4 @@
-package com.exceptions;
+package com.adventure_random;
 
 import java.util.HashMap;
 import java.util.Map;
