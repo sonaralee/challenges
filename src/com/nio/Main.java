@@ -1,67 +1,114 @@
 package com.nio;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
+import java.nio.channels.Pipe;
 
 public class Main {
     public static void main(String[] args) {
 
-        try (FileOutputStream binFile = new FileOutputStream("res/data.dat");
-             FileChannel binChannel = binFile.getChannel()) {
+        try {
+            Pipe pipe = Pipe.open();
 
-            // fill the buffer with strings and ints
-            ByteBuffer bb = ByteBuffer.allocate(100);
-            byte[] outputBytes = "Hello World!".getBytes();
-            bb.put(outputBytes); // input
-            long int1Pos = outputBytes.length;
-            bb.putInt(245); // int1
-            long int2Pos = int1Pos + Integer.BYTES;
-            bb.putInt(-98765); // int2
-            byte[] outputBytes2 = "Nice to meet you".getBytes();
-            bb.put(outputBytes2); // input2
-            long int3Pos = int2Pos + Integer.BYTES + outputBytes2.length;
-            bb.putInt(1000); // int3
-            bb.flip();
+            Runnable writer = () -> {
+                try {
+                    Pipe.SinkChannel sink = pipe.sink();
+                    ByteBuffer bb = ByteBuffer.allocate(56);
 
-            binChannel.write(bb); // <---- write buffer contents to channel
+                    for(int i=0; i<10; i++) {
+                        String curTime = "The time is: " + System.currentTimeMillis();
+                        System.out.println("Writing time " + (i+1));
 
-            RandomAccessFile ra = new RandomAccessFile(
-                    "res/data.dat", "rwd");
-            FileChannel fc = ra.getChannel();
+                        bb.put(curTime.getBytes());
+                        bb.flip();
 
-            ByteBuffer rb = ByteBuffer.allocate(Integer.BYTES);
-            fc.position(int3Pos); // position at end of data to begin reading it back
-            fc.read(rb);
-            rb.flip();
+                        while(bb.hasRemaining()) {
+                            sink.write(bb);
+                        }
+                        bb.flip();
+                        Thread.sleep(100);
+                    }
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+            };
 
-            System.out.println("int3 = " + rb.getInt());
-            rb.flip();
-            fc.position(int2Pos);
-            fc.read(rb);
-            rb.flip();
+            Runnable reader = () -> {
+                try {
+                   Pipe.SourceChannel source = pipe.source();
+                   ByteBuffer bb = ByteBuffer.allocate(56);
 
-            System.out.println("int2 = " + rb.getInt());
-            fc.position(int1Pos);
-            rb.flip();
-            fc.read(rb);
-            rb.flip();
+                   for(int i=0; i<10; i++) {
+                       int bytesRead = source.read(bb);
+                       byte[] timeStr = new byte[bytesRead];
+                       bb.flip();
+                       bb.get(timeStr);
+                       System.out.println("\t(Reading Time " + (i+1) +") " + new String(timeStr));
+                       bb.flip();
+                       Thread.sleep(100);
+                   }
 
-            System.out.println("int1 = " + rb.getInt());
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+            };
 
-            // copy to another file
-            RandomAccessFile copy = new RandomAccessFile(
-                    "res/datacopy.dat", "rw");
-            FileChannel cc = copy.getChannel();
-            fc.position(0); // <---- transferFrom() uses relative position, must set pos before
-            long numTransferred = cc.transferFrom(fc, 0, fc.size());
-            System.out.println("num transferred: " + numTransferred);
+            new Thread(writer).start();
+            new Thread(reader).start();
 
-            fc.close();
-            ra.close();
-            cc.close();
+//        try (FileOutputStream binFile = new FileOutputStream("res/data.dat");
+//             FileChannel binChannel = binFile.getChannel()) {
+//
+//            // fill the buffer with strings and ints
+//            ByteBuffer bb = ByteBuffer.allocate(100);
+//            byte[] outputBytes = "Hello World!".getBytes();
+//            bb.put(outputBytes); // input
+//            long int1Pos = outputBytes.length;
+//            bb.putInt(245); // int1
+//            long int2Pos = int1Pos + Integer.BYTES;
+//            bb.putInt(-98765); // int2
+//            byte[] outputBytes2 = "Nice to meet you".getBytes();
+//            bb.put(outputBytes2); // input2
+//            long int3Pos = int2Pos + Integer.BYTES + outputBytes2.length;
+//            bb.putInt(1000); // int3
+//            bb.flip();
+//
+//            binChannel.write(bb); // <---- write buffer contents to channel
+//
+//            RandomAccessFile ra = new RandomAccessFile(
+//                    "res/data.dat", "rwd");
+//            FileChannel fc = ra.getChannel();
+//
+//            ByteBuffer rb = ByteBuffer.allocate(Integer.BYTES);
+//            fc.position(int3Pos); // position at end of data to begin reading it back
+//            fc.read(rb);
+//            rb.flip();
+//
+//            System.out.println("int3 = " + rb.getInt());
+//            rb.flip();
+//            fc.position(int2Pos);
+//            fc.read(rb);
+//            rb.flip();
+//
+//            System.out.println("int2 = " + rb.getInt());
+//            fc.position(int1Pos);
+//            rb.flip();
+//            fc.read(rb);
+//            rb.flip();
+//
+//            System.out.println("int1 = " + rb.getInt());
+//
+//            // copy to another file
+//            RandomAccessFile copy = new RandomAccessFile(
+//                    "res/datacopy.dat", "rw");
+//            FileChannel cc = copy.getChannel();
+//            fc.position(0); // <---- transferFrom() uses relative position, must set pos before
+//            long numTransferred = cc.transferFrom(fc, 0, fc.size());
+//            System.out.println("num transferred: " + numTransferred);
+//
+//            fc.close();
+//            ra.close();
+//            cc.close();
 
             // write data to file
 //            byte[] outputString = "Hello, World!".getBytes();

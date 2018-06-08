@@ -1,0 +1,4 @@
+File in "res" subdirectory.
+Text 1 sub.
+Text 2 sub.
+Text 3 sub.
