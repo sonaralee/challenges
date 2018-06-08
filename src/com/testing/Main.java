@@ -12,21 +12,14 @@ public class Main {
         S, U, V, etc - 2nd, 3rd, 4th types
     */
     public static void main(String[] args) {
+        IterableList<String> il = new IterableList<>();
+        il.add("Hello");
+        il.add("Goodbye");
+        System.out.println(il);
 
-        //MyWindow win = new MyWindow("Complete Java");
-        //win.setVisible(true);
-//        System.out.println(Series.nSum(1));
-//        System.out.println(Series.nSum(10));
-//
-//        System.out.println(Series.fibonacci(1));
-//        System.out.println(Series.fibonacci(3));
-//
-//        System.out.println(Series.factorial(1));
-//        System.out.println(Series.factorial(10));
-
-        //System.out.println(mult);
-
-
+        for(String item : il) {
+            System.out.println(item.toString());
+        }
 
     }
 

@@ -1,4 +1,4 @@
-package com.timbuchalka;
+package com.answers;
 
 import java.io.*;
 import java.util.*;

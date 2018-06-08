@@ -1,4 +1,4 @@
-package com.timbuchalka;
+package com.answers;
 
 /**
  * Created by timbuchalka on 22/2/17.
