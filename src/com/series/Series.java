@@ -2,7 +2,7 @@ package com.series;
 // Create a suitably named package containing a class called Series
 // with the following static methods:
 
-// When you have tested your functions, delete the Main class and
+// When you have tested your functions, delete the OldMain class and
 // produce a jar file.
 //
 // Create a new project and add your Series library, then test the
